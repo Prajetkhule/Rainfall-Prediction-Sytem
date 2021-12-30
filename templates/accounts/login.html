@@ -1,0 +1,81 @@
+{% extends 'accounts/base.html' %}
+{% block main_content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success'%}
+        <div class="alert alert-success">{{message}}</div>
+        {% elif message.tags == 'error'%}
+        <div class="alert alert-danger">{{message}}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title">Login</h3>
+                <form action="/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input type="number" name="txtmobile" placeholder="Enter mobile number" autocomplete="off" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="txtpassword" placeholder="Enter password" autocomplete="off" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-success">
+                    </div>
+                    <div class="form-group">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title">Signup</h3>
+                <form action="/signup/" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Fullname</label>
+                            <input type="text" name="txtfullname" placeholder="Enter your fullname" autocomplete="off" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <input type="number" name="txtrmobile" placeholder="Enter mobile number" autocomplete="off" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select class="form-control" name="txtrole">
+                              <option value="">Select role</option>
+                              <option value="2">Farmer (User)</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="txtrpassword" placeholder="Create password" autocomplete="off" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <label>&nbsp;</label><br>
+                            <input type="submit" value="Signup" class="btn btn-success">
+                        </div>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

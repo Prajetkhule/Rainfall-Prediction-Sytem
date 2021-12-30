@@ -1,0 +1,24 @@
+{% extends 'farmer/base.html' %}
+{% block main_content %}
+<h2>Predicted rainfall of {{statename}}</h2>
+<div class="row mt-4">
+  <div class="col-md-12 lead">
+    <p>
+      {{annual|safe}}
+    </p>
+    <p>
+      {{JF|safe}}
+    </p>
+    <p>
+      {{MAM|safe}}
+    </p>
+    <p>
+      {{JJAS|safe}}
+    </p>
+    <p>
+      {{OND|safe}}
+    </p>
+  </div>
+</div>
+</form>
+{% endblock %}

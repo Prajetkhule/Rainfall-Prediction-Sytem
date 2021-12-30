@@ -1,0 +1,48 @@
+{% extends 'admin/base.html'%}
+{% block main_content %}
+    <h2>Regions administration</h2>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success'%}
+            <div class="alert alert-success">{{message}}</div>
+            {% elif message.tags == 'error'%}
+            <div class="alert alert-danger">{{message}}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title">Add state</h4>
+                    <form action="/location/states/" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" name="txtstatename" placeholder="Enter name of the state" autocomplete="off" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="btnsavestate" value="Save" class="btn btn-primary">
+                            <input type="reset" value="Clear" class="btn btn-light">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h4>States datalist</h4>
+            <table class="table table-striped table-hover table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>State name</th>
+                </tr>
+            {% for state in stateslist %}
+                <tr>
+                    <td>{{state.id}}</td>
+                    <td>{{state.name}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

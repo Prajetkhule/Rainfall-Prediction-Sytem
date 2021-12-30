@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainfall Prediction System</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container mt-3 mb-3">
+        <h2>Rainfall Prediction System</h2>
+        {% block main_content %}
+        {% endblock %}
+    </div>
+    <footer class="bg-dark p-3 text-white">
+        <div class="container">
+            &copy; Copyrights {% now "Y" %}. All rights reserved.<br>
+            Developed by : Neha Deore, Pooja Chaudhari
+        </div>
+    </footer>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends 'farmer/base.html' %}
+{% block main_content %}
+<h2>Predict rainfall</h2>
+<form action="/rainfall/rain_predict" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>State</label>
+                        <select name="txtstate" class="form-control">
+                            <option value="">Select state</option>
+                            {% for state in states %}
+                            <option value="{{state.id}}">{{state.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Predict" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

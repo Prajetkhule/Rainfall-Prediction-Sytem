@@ -1,0 +1,136 @@
+{% extends 'admin/base.html' %}
+{% block main_content %}
+<h2>Rainfall Dataset</h2>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'success'%}
+<div class="alert alert-success">{{message}}</div>
+{% elif message.tags == 'error'%}
+<div class="alert alert-danger">{{message}}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title">New row in dataset</h3>
+                <form action="/rainfall/rain_dataset" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>State</label>
+                        <select name="txtstate" class="form-control">
+                            <option value="">Select state</option>
+                            {% for state in states %}
+                            <option value="{{state.id}}">{{state.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Year</label>
+                      <input type="number" min="1901" max="{{maxyear}}" name="txtyear" class="form-control" placeholder="Enter year" value="">
+                    </div>
+                    <div class="form-group">
+                      <label>Annual Rainfall</label>
+                      <input type="number" step="0.1" name="txtannual" class="form-control" placeholder="Enter annual rainfall" value="">
+                    </div>
+                    <div class="form-group">
+                      <label>JF</label>
+                      <input type="number" step="0.1" name="txtjf" class="form-control" placeholder="Enter JF rainfall" value="">
+                    </div>
+                    <div class="form-group">
+                      <label>MAM</label>
+                      <input type="number" step="0.1" name="txtmam" class="form-control" placeholder="Enter MAM rainfall" value="">
+                    </div>
+                    <div class="form-group">
+                      <label>JJAS</label>
+                      <input type="number" step="0.1" name="txtjjas" class="form-control" placeholder="Enter JJAS rainfall" value="">
+                    </div>
+                    <div class="form-group">
+                      <label>OND</label>
+                      <input type="number" step="0.1" name="txtond" class="form-control" placeholder="Enter OND rainfall" value="">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary">
+                        <input type="reset" value="Cancel" class="btn btn-light">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h3>Dataset</h3>
+        <div class="row">
+            <div class="col-md-8">
+                <label>State</label>
+                <input type="text" name="" id="txtsearch" placeholder="Search with state name" class="form-control"
+                    onkeyup="searchFunction()">
+            </div>
+            <div class="col-md-4">
+                <form action="/rainfall/rain_export_to_csv" method="post">
+                    {% csrf_token %}
+                    <label>Export your dataset</label>
+                    <input type="submit" value="Export to CSV" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div style="height: 500px;overflow-y: scroll;">
+                    <table class="table table-responsive-md table-bordered table-striped table-hover">
+                        <tr>
+                            <th>#</th>
+                            <th>State</th>
+                            <th>Year</th>
+                            <th>Annual</th>
+                            <th>JF</th>
+                            <th>MAM</th>
+                            <th>JJAS</th>
+                            <th>OND</th>
+                        </tr>
+                        {% for ds in dataset %}
+                        <tr>
+                            <td>{{ds.id}}</td>
+                            <td>{{ds.state}}</td>
+                            <td>{{ds.year}}</td>
+                            <td>{{ds.annual}}</td>
+                            <td>{{ds.jf}}</td>
+                            <td>{{ds.mam}}</td>
+                            <td>{{ds.jjas}}</td>
+                            <td>{{ds.ond}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script_content %}
+<script>
+    function searchFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("txtsearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tblDataset");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+{% endblock %}

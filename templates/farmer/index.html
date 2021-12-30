@@ -1,0 +1,11 @@
+{% extends 'farmer/base.html' %}
+{% block main_content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron text-center">
+            <h2>Welcome {{fullname}}</h2>
+            <a href="/rainfall/rain_predict" class="btn btn-primary">Start your prediction</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
